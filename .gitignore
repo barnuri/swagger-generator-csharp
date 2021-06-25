@@ -1,0 +1,11 @@
+.git
+.htpasswd
+**/.git
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+**/bin
+**/obj
+deploy
+apiKey.txt
