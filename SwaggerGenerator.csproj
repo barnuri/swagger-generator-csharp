@@ -4,7 +4,29 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/barnuri/swagger-generator-csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/barnuri/swagger-generator-csharp</PackageProjectUrl>
+    <PackageTags>swagger, openapi, swagger generator, openapi generator</PackageTags>
+    <Copyright>Bar Nuri</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Bar Nuri</Authors>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <Description>OpenAPI/Swagger API toolchain base on NSwag</Description>
+    <PackageId>SwaggerGenerator.Core</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="deploy\**" />
+    <EmbeddedResource Remove="deploy\**" />
+    <None Remove="deploy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="apiKey.txt" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
@@ -16,6 +38,13 @@
     <PackageReference Include="NSwag.AspNetCore" Version="13.11.3" />
     <PackageReference Include="NSwag.Generation" Version="13.11.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
