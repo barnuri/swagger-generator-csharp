@@ -1,6 +1,6 @@
 # Swagger Generator C#
 
-[![NuGet Version](https://img.shields.io/nuget/v/SwaggerGenerator.Core.svg)](https://www.nuget.org/packages/SwaggerGenerator.Core/)
+[![NuGet Version](https://img.shields.io/nuget/v/CSharpExtensions.OpenSource.Swagger.svg)](https://www.nuget.org/packages/CSharpExtensions.OpenSource.Swagger/)
 
 this nuget base on NSwag
 
