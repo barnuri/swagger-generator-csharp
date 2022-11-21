@@ -1,4 +1,3 @@
-using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using NJsonSchema;
 using NSwag.Generation.Processors;
@@ -32,22 +31,16 @@ public class SwaggerExtendDP : IDocumentProcessor
                 typeof(InversePropertyAttribute),
                 typeof(ForeignKeyAttribute),
                 typeof(JsonIgnoreAttribute),
-                typeof(BsonIgnoreAttribute),
             };
-            foreach (var att in excludeAttributes)
-            {
-                excludedProperties.AddRange(PowerfulGetProperties(type).Where(t => t.GetCustomAttribute(att) != null || t.PropertyType == typeof(MongoDB.Bson.ObjectId)).Select(x => x.Name.ToLower()));
-                excludedProperties.AddRange(PowerfulGetFields(type).Where(t => t.GetCustomAttribute(att) != null || t.FieldType == typeof(MongoDB.Bson.ObjectId)).Select(x => x.Name.ToLower()));
-            }
             excludedProperties = excludedProperties.Distinct().ToList();
 
             var uniqueItemsProperties = new List<string>();
-            uniqueItemsProperties.AddRange(PowerfulGetProperties(type).Where(t => t.GetCustomAttribute(typeof(SwaggerUniqueItems)) != null).Select(t => t.Name.ToLower()));
-            uniqueItemsProperties.AddRange(PowerfulGetFields(type).Where(t => t.GetCustomAttribute(typeof(SwaggerUniqueItems)) != null).Select(t => t.Name.ToLower()));
+            uniqueItemsProperties.AddRange(PowerfulGetProperties(type).Where(t => t.GetCustomAttribute(typeof(SwaggerUniqueItemsAttribute)) != null).Select(t => t.Name.ToLower()));
+            uniqueItemsProperties.AddRange(PowerfulGetFields(type).Where(t => t.GetCustomAttribute(typeof(SwaggerUniqueItemsAttribute)) != null).Select(t => t.Name.ToLower()));
 
             var ignoreInheritProps = new List<string>();
-            ignoreInheritProps.AddRange(PowerfulGetProperties(type).Where(t => t.GetCustomAttribute(typeof(SwaggerIgnoreInheritProps)) != null).Select(t => t.Name.ToLower()));
-            ignoreInheritProps.AddRange(PowerfulGetFields(type).Where(t => t.GetCustomAttribute(typeof(SwaggerIgnoreInheritProps)) != null).Select(t => t.Name.ToLower()));
+            ignoreInheritProps.AddRange(PowerfulGetProperties(type).Where(t => t.GetCustomAttribute(typeof(SwaggerIgnoreInheritPropsAttribute)) != null).Select(t => t.Name.ToLower()));
+            ignoreInheritProps.AddRange(PowerfulGetFields(type).Where(t => t.GetCustomAttribute(typeof(SwaggerIgnoreInheritPropsAttribute)) != null).Select(t => t.Name.ToLower()));
 
             var customDefaultValsProperties = new List<(string name, object? initVal, object? defaultVal)>();
             if (instance != null && !type.IsEnum)
@@ -83,19 +76,4 @@ public class SwaggerExtendDP : IDocumentProcessor
                .Distinct()
                .Where(x => !x.Name.Contains("k__BackingField"))
                .ToArray();
-}
-
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public class SwaggerExcludeAttribute : Attribute
-{
-}
-
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public class SwaggerUniqueItems : Attribute
-{
-}
-
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public class SwaggerIgnoreInheritProps : Attribute
-{
 }

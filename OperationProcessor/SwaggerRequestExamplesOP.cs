@@ -2,7 +2,6 @@
 using NSwag;
 using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,13 +10,14 @@ public class SwaggerRequestExamplesOP : IOperationProcessor
 {
     public bool Process(OperationProcessorContext context)
     {
-        var exampleAtt = context.MethodInfo.GetCustomAttribute<SwaggerRequestExamples>();
-        if (exampleAtt == null || (exampleAtt.JsonExamples ?? new string[] { }).Count() <= 0) { return true; }
+        var exampleAtts = context.MethodInfo.GetCustomAttributes<SwaggerRequestExampleAttribute>();
+        if (!exampleAtts.Any()) { return true; }
         var examples = new Dictionary<string, OpenApiExample>();
-        foreach (var ex in (exampleAtt.JsonExamples ?? new string[] { }))
+        foreach (var exampleAtt in exampleAtts)
         {
-            examples[$"example - {examples.Keys.Count + 1}"] = new OpenApiExample { Value = JsonConvert.DeserializeObject(ex) };
+            examples[exampleAtt.Name] = new OpenApiExample { Value = JsonConvert.DeserializeObject<dynamic>(exampleAtt.Json) };
         }
+        if (context.OperationDescription.Operation?.RequestBody?.Content == null) { return true; }
         var reqContent = context.OperationDescription.Operation.RequestBody.Content;
         foreach (var key in reqContent.Keys)
         {
@@ -28,16 +28,5 @@ public class SwaggerRequestExamplesOP : IOperationProcessor
             }
         }
         return true;
-    }
-}
-
-[AttributeUsage(AttributeTargets.Method)]
-public class SwaggerRequestExamples : Attribute
-{
-    public string[] JsonExamples { get; }
-
-    public SwaggerRequestExamples(params string[] jsonExamples)
-    {
-        JsonExamples = jsonExamples;
     }
 }

@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;;netcoreapp3.1;net5;net6</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/barnuri/swagger-generator-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/barnuri/swagger-generator-csharp</PackageProjectUrl>
     <PackageTags>swagger, openapi, swagger generator, openapi generator</PackageTags>
     <Copyright>Bar Nuri</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -15,24 +13,12 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     <Description>OpenAPI/Swagger API toolchain base on NSwag</Description>
-    <PackageId>SwaggerGenerator.Core</PackageId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="deploy\**" />
-    <EmbeddedResource Remove="deploy\**" />
-    <None Remove="deploy\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="apiKey.txt" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Include="MongoDB.Bson" Version="2.12.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.11.3" />

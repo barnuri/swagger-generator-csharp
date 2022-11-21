@@ -1,11 +1,9 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
 using NJsonSchema.Generation;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 
 public class SwaggerKnownTypesSP : ISchemaProcessor
@@ -15,13 +13,6 @@ public class SwaggerKnownTypesSP : ISchemaProcessor
         foreach (var knownType in context.Type.GetCustomAttributes(typeof(KnownTypeAttribute), true).Cast<KnownTypeAttribute>().Where(t => t.Type != context.Type))
         {
             AddKnownType(context, knownType.Type!);
-        }
-        foreach (var bsonKnownTypes in context.Type.GetCustomAttributes<BsonKnownTypesAttribute>(true))
-        {
-            foreach (var known in bsonKnownTypes.KnownTypes.Where(t => t != context.Type))
-            {
-                AddKnownType(context, known);
-            }
         }
         for (int i = 0; i < context.Schema.AnyOf.Count; i++)
         {
